@@ -1,11 +1,11 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'sqrl/core/version'
+require 'sqrl/auth/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "sqrl/core"
-  spec.version       = Sqrl::Core::VERSION
+  spec.name          = "sqrl/auth"
+  spec.version       = Sqrl::Auth::VERSION
   spec.authors       = ["Justin Love"]
   spec.email         = ["git@JustinLove.name"]
   spec.description   = %q{TODO: Write a gem description}

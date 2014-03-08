@@ -1,5 +1,5 @@
 module Sqrl
-  module Core
+  module Auth
     VERSION = "0.0.1"
   end
 end

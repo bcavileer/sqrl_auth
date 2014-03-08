@@ -6,7 +6,7 @@ TODO: Write a gem description
 
 Add this line to your application's Gemfile:
 
-    gem 'sqrl_core'
+    gem 'sqrl_auth'
 
 And then execute:
 
@@ -14,7 +14,7 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install sqrl_core
+    $ gem install sqrl_auth
 
 ## Usage
 
