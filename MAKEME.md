@@ -42,12 +42,10 @@ Client: Once the code or link has been decoded
 
     # (obtain and decrypt the identity_master_key)
 
-    url = SQRL::URL.parse(surl)
-
     site_key = SQLR::SiteKey(identity_master_key, url)
     request = site_key.sign(url)
     # or
-    request = identity_master_key.sign(surl)
+    request = identity_master_key.sign(url)
 
     identity_master_key.wipe! # ????
 

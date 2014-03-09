@@ -37,7 +37,7 @@ Client: Once the code or link has been decoded
 
     # (obtain and decrypt the identity_master_key)
 
-    url = SQRL::URL.parse(surl)
+    site_key = SQLR::SiteKey(identity_master_key, url)
 
 ## Contributing
 
