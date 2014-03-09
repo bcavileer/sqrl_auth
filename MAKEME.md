@@ -36,14 +36,13 @@ Server: To create a SQRL login session, create a Nut
 Server sessions:
 
     nut = SQRL::OpaqueNut.new
-    url = SQRL::URL.new('example.com', nut)
     session[:nut] = nut.to_s
 
 Client: Once the code or link has been decoded
 
     # (obtain and decrypt the identity_master_key)
 
-    url = SQRL::URL.load(surl)
+    url = SQRL::URL.parse(surl)
 
     site_key = SQLR::SiteKey(identity_master_key, url)
     request = site_key.sign(url)
