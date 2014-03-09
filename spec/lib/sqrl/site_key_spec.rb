@@ -7,4 +7,5 @@ describe SQRL::SiteKey do
   subject {SQRL::SiteKey.new(imk, url)}
 
   it {expect(subject.private_key).to be_a(String)}
+  it {expect(subject.public_key).to be_a(String)}
 end
