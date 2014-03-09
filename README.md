@@ -1,6 +1,8 @@
-# SqrlCore
+# Sqrl::Auth
 
-TODO: Write a gem description
+A Ruby implementation of core SQRL alorithims used when challenging, signing, and verifying SQRL authentication requests
+
+For a gentle introduction to SQRL, try http://sqrl.pl  For All the gritty technical detail, https://www.grc.com/sqrl/sqrl.htm
 
 ## Installation
 
@@ -18,7 +20,13 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Though it's unlikely that Ruby will be on both sides of the conversation, it will server as a useful illustration.
+
+Server: To create a SQRL login session, create a Nut
+
+Server sessions:
+
+    nut = SQRL::OpaqueNut.new
 
 ## Contributing
 

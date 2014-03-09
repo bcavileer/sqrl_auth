@@ -22,7 +22,7 @@ Or install it yourself as:
 
 ### sqrl_auth
 
-Though it's unlikly that Ruby will be on both sides of the conversation, it will server as a useful illustration.
+Though it's unlikely that Ruby will be on both sides of the conversation, it will server as a useful illustration.
 
 Server: To create a SQRL login session, create a Nut
 
