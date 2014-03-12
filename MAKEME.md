@@ -42,14 +42,15 @@ Client: Once the code or link has been decoded
 
     # (obtain and decrypt the identity_master_key)
 
-    site_key = SQLR::SiteKey(identity_master_key, url)
-    request = site_key.sign(url)
-    # or
-    request = identity_master_key.sign(url)
+    request = SQRL::AuthenticationQuery.new(url, identity_master_key)
+    # request.pidk =
+    # request.suk =
+    # request.iuk =
+
+    https_post(request.url, request.to_hash)
+    # or request.post_body depending on what your library wants
 
     identity_master_key.wipe! # ????
-
-    https_post(request.url, request.body)
 
 Server: The server receives a request and verifies it
 

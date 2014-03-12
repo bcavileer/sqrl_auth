@@ -11,9 +11,7 @@ module SQRL
 
     attr_reader :public_key
 
-    def signature(url)
-      url = URL.parse(url) unless url.respond_to?(:scheme)
-      message = url.to_s.sub!(url.scheme + '://', '')
+    def signature(message)
       @private_key.sign(message)
     end
   end
