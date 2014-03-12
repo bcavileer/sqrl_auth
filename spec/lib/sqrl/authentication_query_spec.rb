@@ -1,9 +1,10 @@
 require 'spec_helper'
 require 'sqrl/authentication_query'
+require 'sqrl/identity_master_key'
 
 describe SQRL::AuthenticationQuery do
   let(:url) {'https://example.com/sqrl?nut=awnuts'}
-  let(:imk) {'x'*32}
+  let(:imk) {SQRL::IdentityMasterKey.new('x'*32)}
   subject {SQRL::AuthenticationQuery.new(url, imk)}
 
   it {expect(subject.server_string).to eq(url)}

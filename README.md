@@ -45,6 +45,8 @@ Client: Once the code or link has been decoded
     https_post(request.url, request.to_hash)
     # or request.post_body depending on what your library wants
 
+    identity_master_key.wipe!
+
 ## Contributing
 
 1. Fork it
