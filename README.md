@@ -47,6 +47,16 @@ Client: Once the code or link has been decoded
 
     identity_master_key.wipe!
 
+Server: The server receives a request and verifies it
+
+    req = SQRL::LoginRequest.new(request.body, server_key)
+    raise unless req.valid?
+    user = find_user(req.idk)
+
+Server Sessions:
+
+    req = SQRL::LoginRequest.new(request.body)
+
 ## Contributing
 
 1. Fork it
