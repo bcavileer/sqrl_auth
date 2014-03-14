@@ -1,5 +1,14 @@
 require 'uri'
 
+require 'uri/https'
+
+module URI
+  class SQRL < HTTPS
+    DEFAULT_PORT = 443
+  end
+  @@schemes['SQRL'] = SQRL
+end
+
 module SQRL
   class URL < SimpleDelegator
     def self.parse(url)
@@ -14,7 +23,7 @@ module SQRL
       parts = domain_path.split('/')
       host = parts.first
       parts[0] = ''
-      super(URI::HTTPS.build(:host => host, :path => parts.join('/'), :query => 'nut='+nut))
+      super(URI::SQRL.build(:host => host, :path => parts.join('/'), :query => 'nut='+nut))
     end
 
     def nut

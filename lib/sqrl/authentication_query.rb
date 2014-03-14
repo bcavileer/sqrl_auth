@@ -1,4 +1,5 @@
 require 'base64'
+require 'delegate'
 require 'sqrl/site_key'
 
 module SQRL

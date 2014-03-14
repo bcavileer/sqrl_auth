@@ -3,7 +3,7 @@ require 'sqrl/login_request'
 require 'sqrl/authentication_query'
 
 describe SQRL::LoginRequest do
-  URL = 'https://example.com/sqrl?nut=awnuts'
+  URL = 'sqrl://example.com/sqrl?nut=awnuts'
   def self.testcase
     SQRL::AuthenticationQuery.new(URL, 'x'*32)
   end
@@ -11,13 +11,13 @@ describe SQRL::LoginRequest do
   #p testcase.post_body
 
   let(:raw_request) {
-    {:client=>"dmVyPTENCmNtZD1sb2dpbg0KaWRrPXZkYW82Rk9Pdk05TElpN3JQUGNGSFI4bS1vZ2dTd0xTUW9QNUNUdVJzUU0", :server=>"aHR0cHM6Ly9leGFtcGxlLmNvbS9zcXJsP251dD1hd251dHM", :ids=>"qLUf90XVFW-VmkrV3yE6Ba6n7suQ8MriG7tkicsNbC0ULRwCFBYF2TLg5uxoEbpbLakw7Jgq7tZswvcLxKX5Bw"}
+    {:client=>"dmVyPTENCmNtZD1sb2dpbg0KaWRrPXZkYW82Rk9Pdk05TElpN3JQUGNGSFI4bS1vZ2dTd0xTUW9QNUNUdVJzUU0", :server=>"c3FybDovL2V4YW1wbGUuY29tL3Nxcmw_bnV0PWF3bnV0cw", :ids=>"QKKRM7ygMKilHrYLOp9X4ZndAYZ3nZaQVI8l-qVSIj7XUebqnG_GZ2jOTuZMOlNOVz36RyBCrC7wdvSJl6phAQ"}
   }
   let(:request) {
     Hash[raw_request.map {|k,v| [k.to_s,v]}]
   }
   let(:body) {
-    "client=dmVyPTENCmNtZD1sb2dpbg0KaWRrPXZkYW82Rk9Pdk05TElpN3JQUGNGSFI4bS1vZ2dTd0xTUW9QNUNUdVJzUU0&server=aHR0cHM6Ly9leGFtcGxlLmNvbS9zcXJsP251dD1hd251dHM&ids=qLUf90XVFW-VmkrV3yE6Ba6n7suQ8MriG7tkicsNbC0ULRwCFBYF2TLg5uxoEbpbLakw7Jgq7tZswvcLxKX5Bw"
+    "client=dmVyPTENCmNtZD1sb2dpbg0KaWRrPXZkYW82Rk9Pdk05TElpN3JQUGNGSFI4bS1vZ2dTd0xTUW9QNUNUdVJzUU0&server=c3FybDovL2V4YW1wbGUuY29tL3Nxcmw_bnV0PWF3bnV0cw&ids=QKKRM7ygMKilHrYLOp9X4ZndAYZ3nZaQVI8l-qVSIj7XUebqnG_GZ2jOTuZMOlNOVz36RyBCrC7wdvSJl6phAQ"
   }
 
   it {expect(SQRL::LoginRequest.new({})).not_to be_valid}
