@@ -87,7 +87,6 @@ Client: The client may inspect the response
 
     contents = File.read('filename.sqrl')
     storage = SQRL::SSF.deserialize(contents, :password => password)
-    storage = SQRL::SSF.deserialize(contents, :password => password)
     storage.encrypted_key
     id = SQRL::Hole.new(password, salt).dig(factor, count).dig_up(encrypted_key, tag)
 
