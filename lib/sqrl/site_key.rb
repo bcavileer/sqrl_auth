@@ -4,8 +4,8 @@ require 'rbnacl'
 module SQRL
   class SiteKey
     def initialize(imk, url)
-      url = URL.parse(url) unless url.respond_to?(:host)
-      @private_key = RbNaCl::SigningKey.new(RbNaCl::HMAC::SHA256.auth(imk, url.host))
+      url = URL.parse(url) unless url.respond_to?(:signing_host)
+      @private_key = RbNaCl::SigningKey.new(RbNaCl::HMAC::SHA256.auth(imk, url.signing_host))
       @public_key = @private_key.verify_key.to_s
     end
 

@@ -12,7 +12,11 @@ end
 module SQRL
   class URL < SimpleDelegator
     def self.parse(url)
-      new URI.parse(url)
+      new parser.parse(url)
+    end
+
+    def self.parser
+      URI::Parser.new(:UNRESERVED => "|\\-_.!~*'()a-zA-Z\\d")
     end
 
     def initialize(domain_path, nut = nil)
@@ -23,11 +27,26 @@ module SQRL
       parts = domain_path.split('/')
       host = parts.first
       parts[0] = ''
-      super(URI::SQRL.build(:host => host, :path => parts.join('/'), :query => 'nut='+nut))
+      path = parts.join('/')
+      query = 'nut='+nut
+      super(URI::SQRL.new('sqrl', nil, host, nil, nil, path, nil, query, nil, self.class.parser))
     end
 
     def nut
       query.split('&').find {|n| n.match('nut=')}.gsub('nut=', '')
+    end
+
+    def signing_host
+      parts = path.split('|')
+      if (parts.length > 1)
+        host + parts.first
+      else
+        host
+      end
+    end
+
+    def post_path
+      to_s.sub('|', '/')
     end
   end
 end

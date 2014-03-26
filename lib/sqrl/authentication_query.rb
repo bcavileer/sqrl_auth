@@ -1,6 +1,7 @@
 require 'base64'
 require 'delegate'
 require 'sqrl/site_key'
+require 'sqrl/url'
 
 module SQRL
   class AuthenticationQuery
@@ -9,7 +10,10 @@ module SQRL
       @site_key = SiteKey.new(imk, url)
     end
 
-    attr_reader :url
+    def url
+      URL.new(@url).post_path
+    end
+
     attr_reader :site_key
 
     def post_body
@@ -32,7 +36,7 @@ module SQRL
     end
 
     def server_string
-      url
+      @url
     end
 
     def client_data
