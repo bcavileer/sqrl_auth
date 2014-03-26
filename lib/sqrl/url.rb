@@ -46,7 +46,9 @@ module SQRL
     end
 
     def post_path
-      to_s.sub('|', '/')
+      path = dup
+      path.scheme = 'https'
+      path.to_s.sub('|', '/')
     end
   end
 end

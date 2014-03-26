@@ -11,7 +11,7 @@ module SQRL
     end
 
     def url
-      URL.new(@url).post_path
+      URL.parse(@url).post_path
     end
 
     attr_reader :site_key

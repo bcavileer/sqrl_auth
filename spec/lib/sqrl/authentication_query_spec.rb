@@ -7,7 +7,7 @@ describe SQRL::AuthenticationQuery do
   let(:imk) {SQRL::IdentityMasterKey.new('x'*32)}
   subject {SQRL::AuthenticationQuery.new(url, imk)}
 
-  it {expect(subject.url).to eq(url)}
+  it {expect(subject.url).to eq('https://example.com/sqrl?nut=awnuts')}
   it {expect(subject.server_string).to eq(url)}
   it {expect(subject.client_string).to match("ver=1\r\ncmd=login\r\nidk=")}
   it {expect(subject.to_hash).to be_a(Hash)}
