@@ -1,4 +1,5 @@
 require 'rbnacl'
+require 'base64'
 
 module SQRL
   class LoginRequest
