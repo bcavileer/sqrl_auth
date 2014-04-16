@@ -1,4 +1,5 @@
 require 'openssl'
+require 'base64'
 
 module SQRL
   class ReversibleNut
@@ -13,7 +14,8 @@ module SQRL
       @@serial += 1
     end
 
-    def self.reverse(server_key, bytes)
+    def self.reverse(server_key, nut)
+      bytes = Base64.urlsafe_decode64(nut+'==')
       raw = decrypt(server_key, bytes)
       up = raw.unpack('C4LLa4')
       ip = up[0..3].join('.')
@@ -26,8 +28,12 @@ module SQRL
     def to_bytes
       self.class.encrypt(server_key, raw_bytes)
     end
-    alias_method :to_s, :to_bytes
-    alias_method :to_s, :to_bytes
+
+    def to_s
+      Base64.urlsafe_encode64(to_bytes)[0..21]
+    end
+
+    alias_method :to_str, :to_s
 
     def raw_bytes
       (ip.split('.').map(&:to_i) + [timestamp, serial, nonce]).pack('C4LLa4')

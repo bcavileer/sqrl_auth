@@ -7,6 +7,8 @@ describe SQRL::ReversibleNut do
   let(:ip) {'127.0.0.1'}
   subject {SQRL::ReversibleNut.new(server_key, ip)}
   it {subject.to_bytes.length.should == 16}
-  it {SQRL::ReversibleNut.reverse(server_key, subject.to_bytes).ip.should == ip}
-  it {SQRL::ReversibleNut.reverse(server_key, subject.to_bytes).timestamp.should == subject.timestamp}
+  it {subject.to_s.length.should == 22}
+  it {subject.to_s.should_not match('=')}
+  it {SQRL::ReversibleNut.reverse(server_key, subject.to_s).ip.should == ip}
+  it {SQRL::ReversibleNut.reverse(server_key, subject.to_s).timestamp.should == subject.timestamp}
 end
