@@ -4,9 +4,26 @@ require 'uri/https'
 
 module URI
   class SQRL < HTTPS
-    DEFAULT_PORT = 443
+    def self.scheme
+      'sqrl'
+    end
+
+    def post_scheme
+      'https'
+    end
   end
   @@schemes['SQRL'] = SQRL
+
+  class QRL < HTTP
+    def self.scheme
+      'qrl'
+    end
+
+    def post_scheme
+      'http'
+    end
+  end
+  @@schemes['QRL'] = QRL
 end
 
 module SQRL
@@ -19,17 +36,21 @@ module SQRL
       URI::Parser.new(:UNRESERVED => "|\\-_.!~*'()a-zA-Z\\d")
     end
 
-    def initialize(domain_path, nut = nil)
-      if (!nut)
-        return super(domain_path)
-      end
+    def self.sqrl(domain_path, nut)
+      create(URI::SQRL, domain_path, nut)
+    end
 
+    def self.qrl(domain_path, nut)
+      create(URI::QRL, domain_path, nut)
+    end
+
+    def self.create(kind, domain_path, nut)
       parts = domain_path.split('/')
       host = parts.first
       parts[0] = ''
       path = parts.join('/')
       query = 'nut='+nut
-      super(URI::SQRL.new('sqrl', nil, host, nil, nil, path, nil, query, nil, self.class.parser))
+      new(kind.new(kind.scheme, nil, host, nil, nil, path, nil, query, nil, parser))
     end
 
     def nut
@@ -47,7 +68,7 @@ module SQRL
 
     def post_path
       path = dup
-      path.scheme = 'https'
+      path.scheme = post_scheme
       path.to_s.sub('|', '/')
     end
   end
