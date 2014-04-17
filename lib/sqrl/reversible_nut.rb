@@ -5,7 +5,7 @@ module SQRL
   class ReversibleNut
     @@serial = 0
 
-    def initialize(server_key, ip, timestamp = Time.now.tv_sec, serial = @@serial)
+    def initialize(server_key, ip, timestamp = now, serial = @@serial)
       @server_key = server_key
       @ip = ip
       @timestamp = timestamp
@@ -57,9 +57,18 @@ module SQRL
       @nonce ||= SecureRandom.random_bytes(4)
     end
 
+    def age
+      now - timestamp
+    end
+
     attr_reader :server_key
     attr_accessor :ip
     attr_accessor :serial
     attr_accessor :timestamp
+
+
+    def now
+      Time.now.tv_sec
+    end
   end
 end
