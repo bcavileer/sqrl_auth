@@ -68,8 +68,8 @@ Server: The server receives a request and verifies it
     }, {
       :foo => 'bar',
     })
-    send_response(response.body)
-    login(req.client_ip, user) if req.login?
+    send_response(response.response_body)
+    login(req_nut.ip, user) if req.login?
 
 Server Sessions:
 

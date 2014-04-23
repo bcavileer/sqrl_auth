@@ -54,8 +54,20 @@ Server: The server receives a request and verifies it
 
     req = SQRL::LoginRequest.new(request.body, server_key)
     raise unless req.valid?
-    nut = SQRL::ReversibleNut.reverse(params[:nut])
+    req_nut = SQRL::ReversibleNut.reverse(server_key, params[:nut])
     user = find_user(req.idk)
+    res_nut = SQRL::ReversibleNut.new(server_key, req_nut.ip)
+    response = SQRL::LoginResponse.new(res_nut, {
+      :id_match => req.idk == user.idk,
+      :previous_id_match => req.pidk == user.idk,
+      :ip_match => req.ip == req_nut.ip,
+      :login_enabled => user.sqrl_enabled?,
+      :logged_in => session.logged_in?(user),
+    }, {
+      :foo => 'bar',
+    })
+    send_response(response.response_body)
+    login(req_nut.ip, user) if req.login?
 
 Server Sessions:
 

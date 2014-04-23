@@ -49,6 +49,14 @@ module SQRL
       decode(params['ids'])
     end
 
+    def pidk
+      decode(client_data['pidk'])
+    end
+
+    def pids
+      decode(params['pids'])
+    end
+
     private
     def decode(s)
       return '' unless s
