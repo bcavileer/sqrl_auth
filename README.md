@@ -54,11 +54,13 @@ Server: The server receives a request and verifies it
 
     req = SQRL::LoginRequest.new(request.body, server_key)
     raise unless req.valid?
+    nut = SQRL::ReversibleNut.reverse(params[:nut])
     user = find_user(req.idk)
 
 Server Sessions:
 
     req = SQRL::LoginRequest.new(request.body)
+    login(find_session(params[:nut]), user)
 
 ## Contributing
 

@@ -56,15 +56,25 @@ Server: The server receives a request and verifies it
 
     req = SQRL::LoginRequest.new(request.body, server_key)
     raise unless req.valid?
+    req_nut = SQRL::ReversibleNut.reverse(server_key, params[:nut])
     user = find_user(req.idk)
-    response = req.respond_with(user) # if your user is protocol compatible
+    res_nut = SQRL::ReversibleNut.new(server_key, req_nut.ip)
+    response = SQRL::LoginResponse.new(res_nut, {
+      :id_match => req.idk == user.idk,
+      :previous_id_match => req.pidk == user.idk,
+      :ip_match => req.ip == req_nut.ip,
+      :login_enabled => user.sqrl_enabled?,
+      :logged_in => session.logged_in?(user),
+    }, {
+      :foo => 'bar',
+    })
     send_response(response.body)
     login(req.client_ip, user) if req.login?
 
 Server Sessions:
 
     req = SQRL::LoginRequest.new(request.body)
-    login(find_session(req.nut), user)
+    login(find_session(params[:nut]), user)
 
 Client: The client may inspect the response
 
