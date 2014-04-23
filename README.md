@@ -64,6 +64,7 @@ Server: The server receives a request and verifies it
       :login_enabled => user.sqrl_enabled?,
       :logged_in => session.logged_in?(user),
     }, {
+      :sfn => 'CoolApp',
       :foo => 'bar',
     })
     send_response(response.response_body)
