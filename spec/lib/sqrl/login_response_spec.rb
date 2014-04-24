@@ -5,14 +5,12 @@ describe SQRL::LoginResponse do
   def nut; 'x'*22; end
   subject {SQRL::LoginResponse.new(nut, {}, {})}
 
-  it {expect(subject.server_string).to match('ver=1')}
+  it {expect(subject.response_body).to match('ver=1')}
   it {expect(subject.to_hash).to be_a(Hash)}
-  it {expect(subject.to_hash[:server]).to be_a(String)}
   it {expect(subject.server_data).to be_a(Hash)}
   it {expect(subject.server_data[:ver]).to eq('1')}
   it {expect(subject.server_data[:nut]).to eq(nut)}
   it {expect(subject.server_data[:tif]).to be_a(String)}
-  it {expect(subject.response_body).to be_a(String)}
 
   def with(flags)
     SQRL::LoginResponse.new(nut, flags, {}).tif

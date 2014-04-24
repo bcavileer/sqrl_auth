@@ -60,9 +60,11 @@ Server: The server receives a request and verifies it
     response = SQRL::LoginResponse.new(res_nut, {
       :id_match => req.idk == user.idk,
       :previous_id_match => req.pidk == user.idk,
-      :ip_match => req.ip == req_nut.ip,
+      :ip_match => request.ip == req_nut.ip,
       :login_enabled => user.sqrl_enabled?,
       :logged_in => session.logged_in?(user),
+      :command_failed => invalid,
+      :sqrl_failure => invalid,
     }, {
       :sfn => 'CoolApp',
       :foo => 'bar',

@@ -9,13 +9,11 @@ module SQRL
     end
 
     def response_body
-      to_hash.to_a.map{|pair| pair.join('=')}.join('&')
+      server_string
     end
 
     def to_hash
-      {
-        :server => encode(server_string),
-      }
+      server_data
     end
 
     def server_string

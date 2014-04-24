@@ -55,16 +55,19 @@ Client: Once the code or link has been decoded
 Server: The server receives a request and verifies it
 
     req = SQRL::LoginRequest.new(request.body, server_key)
-    raise unless req.valid?
+    invalid = !req.valid?
+    raise if invalid
     req_nut = SQRL::ReversibleNut.reverse(server_key, params[:nut])
     user = find_user(req.idk)
     res_nut = req_nut.response_nut
     response = SQRL::LoginResponse.new(res_nut, {
       :id_match => req.idk == user.idk,
       :previous_id_match => req.pidk == user.idk,
-      :ip_match => req.ip == req_nut.ip,
+      :ip_match => request.ip == req_nut.ip,
       :login_enabled => user.sqrl_enabled?,
       :logged_in => session.logged_in?(user),
+      :command_failed => invalid,
+      :sqrl_failure => invalid,
     }, {
       :sfn => 'CoolApp',
       :foo => 'bar',
