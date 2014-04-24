@@ -35,6 +35,10 @@ module SQRL
 
     alias_method :to_str, :to_s
 
+    def response_nut
+      self.class.new(server_key, ip)
+    end
+
     def raw_bytes
       (ip.split('.').map(&:to_i) + [timestamp, serial, nonce]).pack('C4LLa4')
     end
@@ -66,6 +70,7 @@ module SQRL
     attr_accessor :serial
     attr_accessor :timestamp
 
+    private
 
     def now
       Time.now.tv_sec

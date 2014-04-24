@@ -56,7 +56,7 @@ Server: The server receives a request and verifies it
     raise unless req.valid?
     req_nut = SQRL::ReversibleNut.reverse(server_key, params[:nut])
     user = find_user(req.idk)
-    res_nut = SQRL::ReversibleNut.new(server_key, req_nut.ip)
+    res_nut = req_nut.response_nut
     response = SQRL::LoginResponse.new(res_nut, {
       :id_match => req.idk == user.idk,
       :previous_id_match => req.pidk == user.idk,

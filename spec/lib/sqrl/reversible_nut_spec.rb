@@ -9,6 +9,7 @@ describe SQRL::ReversibleNut do
   it {subject.to_bytes.length.should == 16}
   it {subject.to_s.length.should == 22}
   it {subject.to_s.should_not match('=')}
+  it {subject.response_nut.should be_a(SQRL::ReversibleNut)}
   it {SQRL::ReversibleNut.reverse(server_key, subject.to_s).ip.should == ip}
   it {SQRL::ReversibleNut.reverse(server_key, subject.to_s).timestamp.should == subject.timestamp}
 end
