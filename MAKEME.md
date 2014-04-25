@@ -41,25 +41,25 @@ Server sessions:
 Client: Once the code or link has been decoded
 
     # (obtain and decrypt the identity_master_key)
+    session = SQRL::ClientSession.new(url, identity_master_key)
+    #session.pidk = 
 
-    request = SQRL::AuthenticationQuery.new(url, identity_master_key)
-    # request.pidk =
-    # request.suk =
-    # request.iuk =
+    request = SQRL::AuthenticationQueryGenerator.new(session)
 
     https_post(request.url, request.to_hash)
     # or request.post_body depending on what your library wants
 
-    identity_master_key.wipe!
-
 Server: The server receives a request and verifies it
 
-    req = SQRL::LoginRequest.new(request.body)
+    req = SQRL::AuthenticationQueryParser.new(request.body)
     invalid = !req.valid?
     req_nut = SQRL::ReversibleNut.reverse(server_key, params[:nut])
     user = find_user(req.idk)
+
+    req.login? #etc, on the second loop
+
     res_nut = req_nut.response_nut
-    response = SQRL::LoginResponse.new(res_nut, {
+    response = SQRL::AuthenticationResponseGenerator.new(res_nut, {
       :id_match => req.idk == user.idk,
       :previous_id_match => req.pidk == user.idk,
       :ip_match => request.ip == req_nut.ip,
@@ -72,19 +72,33 @@ Server: The server receives a request and verifies it
       :foo => 'bar',
     })
     send_response(response.response_body)
-    login(req_nut.ip, user) if req.login?
-
-Server Sessions:
-
-    req = SQRL::LoginRequest.new(request.body)
-    login(find_session(params[:nut]), user)
 
 Client: The client may inspect the response
 
-    res = SQRL::LoginResponse(response.body)
-    raise if res.failed?
+    res = SQRL::AuthenticationResponseParser.new(session, response.body)
+    res.failed?
     res.logged_in?
     res.server_friendly_name
+
+    # obtain user intent to login
+
+    res.update_session!
+
+    request = SQRL::AuthenticationQueryGenerator.new(session)
+    # one or more:
+    request.setkey!
+    request.setlock!({:suk => server_unlock_key, :vuk => verify_unlock_key})
+    request.login!
+    request.logme!
+    request.logoff!
+    request.disable!
+    request.enable!
+    request.delete!
+    request.create!
+
+    https_post(request.url, request.to_hash)
+
+    session.wipe_keys!
 
 ### sqrl_client
 

@@ -9,7 +9,7 @@ describe SQRL::AuthenticationQuery do
 
   it {expect(subject.url).to eq('https://example.com/sqrl?nut=awnuts')}
   it {expect(subject.server_string).to eq(url)}
-  it {expect(subject.client_string).to match("ver=1\r\ncmd=login\r\nidk=")}
+  it {expect(subject.client_string).to match("ver=1\r\nidk=")}
   it {expect(subject.to_hash).to be_a(Hash)}
   it {expect(subject.to_hash[:server]).to eq('c3FybDovL2V4YW1wbGUuY29tL3Nxcmw_bnV0PWF3bnV0cw')}
   it {expect(subject.to_hash[:client]).to match(/\A[\-\w_]+\Z/)}

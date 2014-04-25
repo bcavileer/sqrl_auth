@@ -1,5 +1,4 @@
 require 'base64'
-require 'delegate'
 require 'sqrl/site_key'
 require 'sqrl/url'
 
@@ -42,7 +41,6 @@ module SQRL
     def client_data
       {
         :ver => 1,
-        :cmd => 'login',
         :idk => encode(site_key.public_key),
       }
     end

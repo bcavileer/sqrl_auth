@@ -20,6 +20,8 @@ Or install it yourself as:
 
 ## Usage
 
+### sqrl_auth
+
 Though it's unlikely that Ruby will be on both sides of the conversation, it will server as a useful illustration.
 
 Server: To create a SQRL login session, create a Nut
@@ -48,14 +50,15 @@ Client: Once the code or link has been decoded
     https_post(request.url, request.to_hash)
     # or request.post_body depending on what your library wants
 
-    identity_master_key.wipe!
-
 Server: The server receives a request and verifies it
 
     req = SQRL::LoginRequest.new(request.body)
     invalid = !req.valid?
     req_nut = SQRL::ReversibleNut.reverse(server_key, params[:nut])
     user = find_user(req.idk)
+
+    req.login? #etc, on the second loop
+
     res_nut = req_nut.response_nut
     response = SQRL::LoginResponse.new(res_nut, {
       :id_match => req.idk == user.idk,
@@ -74,7 +77,6 @@ Server: The server receives a request and verifies it
 
 Server Sessions:
 
-    req = SQRL::LoginRequest.new(request.body)
     login(find_session(params[:nut]), user)
 
 ## Contributing
