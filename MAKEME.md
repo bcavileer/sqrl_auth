@@ -54,9 +54,8 @@ Client: Once the code or link has been decoded
 
 Server: The server receives a request and verifies it
 
-    req = SQRL::LoginRequest.new(request.body, server_key)
+    req = SQRL::LoginRequest.new(request.body)
     invalid = !req.valid?
-    raise if invalid
     req_nut = SQRL::ReversibleNut.reverse(server_key, params[:nut])
     user = find_user(req.idk)
     res_nut = req_nut.response_nut
