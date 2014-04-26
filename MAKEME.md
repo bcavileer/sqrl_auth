@@ -44,7 +44,7 @@ Client: Once the code or link has been decoded
     session = SQRL::ClientSession.new(url, identity_master_key)
     #session.pidk = 
 
-    request = SQRL::AuthenticationQueryGenerator.new(session)
+    request = SQRL::AuthenticationQueryGenerator.new(session, url)
 
     https_post(request.url, request.to_hash)
     # or request.post_body depending on what your library wants
@@ -84,7 +84,7 @@ Client: The client may inspect the response
 
     res.update_session!
 
-    request = SQRL::AuthenticationQueryGenerator.new(session)
+    request = SQRL::AuthenticationQueryGenerator.new(session, response.body)
     # one or more:
     request.setkey!
     request.setlock!({:suk => server_unlock_key, :vuk => verify_unlock_key})
