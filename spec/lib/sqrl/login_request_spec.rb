@@ -1,11 +1,11 @@
 require 'spec_helper'
 require 'sqrl/login_request'
-require 'sqrl/authentication_query'
+require 'sqrl/authentication_query_generator'
 
 describe SQRL::LoginRequest do
   URL = 'sqrl://example.com/sqrl?nut=awnuts'
   def self.testcase
-    SQRL::AuthenticationQuery.new(URL, 'x'*32)
+    SQRL::AuthenticationQueryGenerator.new(URL, 'x'*32)
   end
   #p testcase.to_hash
   #p testcase.post_body

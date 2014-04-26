@@ -1,13 +1,15 @@
 require 'spec_helper'
-require 'sqrl/authentication_query'
+require 'sqrl/authentication_query_generator'
+require 'sqrl/client_session'
 require 'sqrl/identity_master_key'
 
-describe SQRL::AuthenticationQuery do
+describe SQRL::AuthenticationQueryGenerator do
   let(:url) {'sqrl://example.com/sqrl?nut=awnuts'}
   let(:imk) {SQRL::IdentityMasterKey.new('x'*32)}
-  subject {SQRL::AuthenticationQuery.new(url, imk)}
+  let(:session) {SQRL::ClientSession.new(url, imk)}
+  subject {SQRL::AuthenticationQueryGenerator.new(session, url)}
 
-  it {expect(subject.url).to eq('https://example.com/sqrl?nut=awnuts')}
+  it {expect(subject.post_path).to eq('https://example.com/sqrl?nut=awnuts')}
   it {expect(subject.server_string).to eq(url)}
   it {expect(subject.client_string).to match("ver=1\r\nidk=")}
   it {expect(subject.to_hash).to be_a(Hash)}

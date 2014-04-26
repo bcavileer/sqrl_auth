@@ -1,19 +1,17 @@
 require 'base64'
-require 'sqrl/site_key'
-require 'sqrl/url'
 
 module SQRL
-  class AuthenticationQuery
-    def initialize(url, imk)
-      @url = url
-      @site_key = SiteKey.new(imk, url)
+  class AuthenticationQueryGenerator
+    def initialize(session, server_string)
+      @session = session
+      @server_string = server_string
     end
 
-    def url
-      URL.parse(@url).post_path
-    end
+    attr_reader :server_string
 
-    attr_reader :site_key
+    def post_path
+      @session.post_path
+    end
 
     def post_body
       to_hash.to_a.map{|pair| pair.join('=')}.join('&')
@@ -34,10 +32,6 @@ module SQRL
       client_data.to_a.map{|pair| pair.join('=')}.join("\r\n")
     end
 
-    def server_string
-      @url
-    end
-
     def client_data
       {
         :ver => 1,
@@ -46,6 +40,10 @@ module SQRL
     end
 
     private
+
+    def site_key
+      @session.site_key
+    end
 
     def encode(string)
       Base64.urlsafe_encode64(string).sub(/=*\z/, '')

@@ -43,12 +43,9 @@ Client: Once the code or link has been decoded
     # (obtain and decrypt the identity_master_key)
     session = SQRL::ClientSession.new(url, identity_master_key)
 
-    request = SQRL::AuthenticationQuery.new(url, identity_master_key)
-    # request.pidk =
-    # request.suk =
-    # request.iuk =
+    request = SQRL::AuthenticationQueryGenerator.new(session, url)
 
-    https_post(request.url, request.to_hash)
+    https_post(request.post_path, request.to_hash)
     # or request.post_body depending on what your library wants
 
 Server: The server receives a request and verifies it
@@ -74,11 +71,6 @@ Server: The server receives a request and verifies it
       :foo => 'bar',
     })
     send_response(response.response_body)
-    login(req_nut.ip, user) if req.login?
-
-Server Sessions:
-
-    login(find_session(params[:nut]), user)
 
 ## Contributing
 

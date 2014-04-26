@@ -46,7 +46,7 @@ Client: Once the code or link has been decoded
 
     request = SQRL::AuthenticationQueryGenerator.new(session, url)
 
-    https_post(request.url, request.to_hash)
+    https_post(request.post_path, request.to_hash)
     # or request.post_body depending on what your library wants
 
 Server: The server receives a request and verifies it
@@ -96,7 +96,7 @@ Client: The client may inspect the response
     request.delete!
     request.create!
 
-    https_post(request.url, request.to_hash)
+    https_post(request.post_path, request.to_hash)
 
     session.wipe_keys!
 
