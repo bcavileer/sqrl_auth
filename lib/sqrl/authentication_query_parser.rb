@@ -2,7 +2,7 @@ require 'rbnacl'
 require 'base64'
 
 module SQRL
-  class LoginRequest
+  class AuthenticationQueryParser
     def initialize(params)
       if (params.respond_to?(:split))
         @params = Hash[params.split('&').map {|s| s.split('=')}]
@@ -10,7 +10,7 @@ module SQRL
         @params = params
       end
       if @params.any? && !@params.keys.first.kind_of?(String)
-        raise ArgumentError, "LoginRequest uses string keys for params"
+        raise ArgumentError, "AuthenticationQueryParser uses string keys for params"
       end
     end
 
