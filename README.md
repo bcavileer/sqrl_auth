@@ -58,7 +58,7 @@ Server: The server receives a request and verifies it
     req.login? #etc, on the second loop
 
     res_nut = req_nut.response_nut
-    response = SQRL::LoginResponse.new(res_nut, {
+    response = SQRL::AuthenticationResponseGenerator.new(res_nut, {
       :id_match => req.idk == user.idk,
       :previous_id_match => req.pidk == user.idk,
       :ip_match => request.ip == req_nut.ip,

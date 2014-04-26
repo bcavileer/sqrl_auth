@@ -1,7 +1,7 @@
 require 'base64'
 
 module SQRL
-  class LoginResponse
+  class AuthenticationResponseGenerator
     def initialize(nut, flags, fields)
       @nut = nut
       @flags = flags
