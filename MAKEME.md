@@ -76,7 +76,7 @@ Server: The server receives a request and verifies it
 Client: The client may inspect the response
 
     res = SQRL::AuthenticationResponseParser.new(session, response.body)
-    res.failed?
+    res.command_failed?
     res.logged_in?
     res.server_friendly_name
 

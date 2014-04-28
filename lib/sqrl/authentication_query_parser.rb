@@ -10,7 +10,7 @@ module SQRL
         @params = params
       end
       if @params.any? && !@params.keys.first.kind_of?(String)
-        raise ArgumentError, "AuthenticationQueryParser uses string keys for params"
+        raise ArgumentError, "#{self.class.name} uses string keys for params"
       end
     end
 

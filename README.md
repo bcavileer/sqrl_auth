@@ -72,6 +72,19 @@ Server: The server receives a request and verifies it
     })
     send_response(response.response_body)
 
+Client: The client may inspect the response
+
+    res = SQRL::AuthenticationResponseParser.new(session, response.body)
+    res.command_failed?
+    res.logged_in?
+    res.server_friendly_name
+
+    # obtain user intent to login
+
+    request = SQRL::AuthenticationQueryGenerator.new(session, response.body)
+
+    https_post(request.post_path, request.to_hash)
+
 ## Contributing
 
 1. Fork it
