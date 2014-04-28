@@ -16,6 +16,10 @@ module SQRL
 
     attr_reader :params
 
+    def commands
+      (client_data['cmd'] || '').split('~')
+    end
+
     def message
       params['client']+params['server']
     end

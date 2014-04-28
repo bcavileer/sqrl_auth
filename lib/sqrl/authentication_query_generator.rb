@@ -5,10 +5,17 @@ module SQRL
     def initialize(session, server_string)
       @session = session
       @server_string = server_string
+      @commands = []
     end
 
     attr_reader :session
     attr_reader :server_string
+    attr_reader :commands
+
+    def login!
+      @commands << 'login'
+      self
+    end
 
     def post_path
       @session.post_path
@@ -36,6 +43,7 @@ module SQRL
     def client_data
       {
         :ver => 1,
+        :cmd => @commands.join('~'),
         :idk => encode(site_key.public_key),
       }
     end

@@ -1,11 +1,13 @@
 require 'spec_helper'
 require 'sqrl/authentication_query_parser'
+require 'sqrl/client_session'
 require 'sqrl/authentication_query_generator'
 
 describe SQRL::AuthenticationQueryParser do
   URL = 'sqrl://example.com/sqrl?nut=awnuts'
   def self.testcase
-    SQRL::AuthenticationQueryGenerator.new(URL, 'x'*32)
+    session = SQRL::ClientSession.new(URL, 'x'*32)
+    SQRL::AuthenticationQueryGenerator.new(session, URL).login!
   end
   #p testcase.to_hash
   #p testcase.post_body
@@ -28,9 +30,11 @@ describe SQRL::AuthenticationQueryParser do
     it {expect(subject.client_string).to match('ver=1\r\ncmd=login\r\nidk=')}
     it {expect(subject.client_data).to be_a(Hash)}
     it {expect(subject.client_data['ver']).to eq('1')}
+    it {expect(subject.client_data['cmd']).to eq('login')}
+    it {expect(subject.commands).to eq(['login'])}
     it {expect(subject.idk.length).to eq(32)}
     it {expect(subject.ids.length).to eq(64)}
-    it {expect(SQRL::AuthenticationQueryParser.new(request)).to be_valid}
+    it {expect(subject).to be_valid}
   end
 
   describe 'string request' do
