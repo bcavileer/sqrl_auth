@@ -1,6 +1,6 @@
 require 'uri'
-
 require 'uri/https'
+require 'delegate'
 
 module URI
   class SQRL < HTTPS

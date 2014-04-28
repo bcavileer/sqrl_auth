@@ -7,6 +7,7 @@ module SQRL
       @server_string = server_string
     end
 
+    attr_reader :session
     attr_reader :server_string
 
     def post_path
