@@ -1,4 +1,3 @@
-require 'sqrl/url'
 require 'rbnacl'
 
 module SQRL
