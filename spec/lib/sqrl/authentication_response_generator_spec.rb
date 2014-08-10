@@ -5,7 +5,8 @@ describe SQRL::AuthenticationResponseGenerator do
   def nut; 'x'*22; end
   subject {SQRL::AuthenticationResponseGenerator.new(nut, {}, {})}
 
-  it {expect(subject.response_body).to match('ver=1')}
+  it {expect(subject.response_body).to match('server=')}
+  it {expect(subject.server_string).to match('ver=1')}
   it {expect(subject.to_hash).to be_a(Hash)}
   it {expect(subject.server_data).to be_a(Hash)}
   it {expect(subject.server_data[:ver]).to eq('1')}

@@ -9,7 +9,7 @@ module SQRL
     end
 
     def response_body
-      server_string
+      'server=' + encode(server_string)
     end
 
     def to_hash
