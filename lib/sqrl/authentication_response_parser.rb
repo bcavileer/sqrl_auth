@@ -8,12 +8,17 @@ module SQRL
       @session = session
 
       if (params.respond_to?(:split))
-        @params = Hash[params.split("\r\n").map {|s| s.split('=')}]
+        @params = parse_params(params)
       else
         @params = params
       end
+
       if @params.any? && !@params.keys.first.kind_of?(String)
         raise ArgumentError, "#{self.class.name} uses string keys for params"
+      end
+
+      if @params['server']
+        @params = parse_params(decode(@params['server']))
       end
     end
 
@@ -28,6 +33,10 @@ module SQRL
       params['sfn'] || 'unspecified'
     end
 
+    def tif
+      params['tif'].to_i(16)
+    end
+
     TIF = {
       0x01 => :id_match,
       0x02 => :previous_id_match,
@@ -39,7 +48,7 @@ module SQRL
       0x80 => :sqrl_failure,
     }.each do |bit,prop|
       define_method(prop.to_s+'?') do
-        @params['tif'].to_i(16) & bit != 0
+        tif & bit != 0
       end
     end
 
@@ -50,6 +59,10 @@ module SQRL
       r = (s.length % 4)
       badness = r > 0 ? 4 - r : 0
       Base64.urlsafe_decode64(s + '='*badness)
+    end
+
+    def parse_params(s)
+      Hash[s.split("\r\n").map {|s| s.split('=')}]
     end
   end
 end
