@@ -6,7 +6,10 @@ module SQRL
       @nut = nut
       @flags = flags
       @fields = fields
+      @tif_base = 16
     end
+
+    attr_accessor :tif_base
 
     def response_body
       'server=' + encode(server_string)
@@ -24,7 +27,7 @@ module SQRL
       {
         :ver => '1',
         :nut => @nut,
-        :tif => tif.to_s(16),
+        :tif => tif.to_s(tif_base),
       }.merge(@fields)
     end
 
