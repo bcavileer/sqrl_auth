@@ -43,15 +43,19 @@ module SQRL
       (ip.split('.').map(&:to_i) + [timestamp, serial, nonce]).pack('C4LLa4')
     end
 
+    def self.new_cipher
+      OpenSSL::Cipher::AES128.new(:CFB)
+    end
+
     def self.encrypt(server_key, bytes)
-      cipher = OpenSSL::Cipher::AES128.new(:CTR)
+      cipher = new_cipher
       cipher.encrypt
       cipher.key = server_key
       cipher.update(bytes)
     end
 
     def self.decrypt(server_key, bytes)
-      cipher = OpenSSL::Cipher::AES128.new(:CTR)
+      cipher = new_cipher
       cipher.decrypt
       cipher.key = server_key
       cipher.update(bytes)
