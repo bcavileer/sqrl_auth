@@ -1,6 +1,7 @@
 module SQRL
   class Key
     def initialize(bytes)
+      bytes = bytes.to_s
       unless bytes.encoding == Encoding::BINARY
         raise EncodingError, "keys must use BINARY encoding (got #{bytes.encoding})"
       end
