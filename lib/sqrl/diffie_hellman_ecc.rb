@@ -8,7 +8,7 @@ module SQRL
       RbNaCl::GroupElement.base.mult(secret_key).to_bytes
     end
 
-    def shared_secret(secret_key, public_key)
+    def shared_secret(public_key, secret_key)
       RbNaCl::GroupElement.new(public_key).mult(secret_key).to_bytes
     end
   end
