@@ -1,6 +1,6 @@
 require 'sqrl/key'
 require 'sqrl/identity_lock_key'
-require 'rbnacl'
+require 'sqrl/diffie_hellman_ecc'
 
 module SQRL
   class IdentityUnlockKey < Key
@@ -9,7 +9,7 @@ module SQRL
     end
 
     def identity_lock_key
-      IdentityLockKey.new(RbNaCl::SigningKey.new(@bytes).verify_key)
+      IdentityLockKey.new(DiffieHellmanECC.public_key(@bytes))
     end
   end
 end
