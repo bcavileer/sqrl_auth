@@ -8,7 +8,7 @@ module SQRL
       super(SecureRandom.random_bytes(32))
     end
 
-    def identity_lock_key
+    def server_unlock_key
       ServerUnlockKey.new(DiffieHellmanECC.public_key(@bytes))
     end
   end
