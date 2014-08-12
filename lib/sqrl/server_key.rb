@@ -1,7 +1,7 @@
-require 'sqrl/identity_master_key'
+require 'sqrl/key'
 
 module SQRL
-  class ServerKey < IdentityMasterKey
+  class ServerKey < Key
     def initialize(bytes = SecureRandom.random_bytes(16))
       super(bytes)
     end
