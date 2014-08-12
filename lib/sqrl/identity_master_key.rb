@@ -1,6 +1,9 @@
 module SQRL
   class IdentityMasterKey
     def initialize(bytes)
+      unless bytes.encoding == Encoding::BINARY
+        raise EncodingError, "keys must use BINARY encoding (got #{bytes.encoding})"
+      end
       @bytes = bytes
     end
 

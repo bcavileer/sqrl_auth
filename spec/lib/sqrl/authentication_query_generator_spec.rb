@@ -5,7 +5,7 @@ require 'sqrl/identity_master_key'
 
 describe SQRL::AuthenticationQueryGenerator do
   let(:url) {'sqrl://example.com/sqrl?nut=awnuts'}
-  let(:imk) {SQRL::IdentityMasterKey.new('x'*32)}
+  let(:imk) {SQRL::IdentityMasterKey.new('x'.b*32)}
   let(:session) {SQRL::ClientSession.new(url, imk)}
   subject {SQRL::AuthenticationQueryGenerator.new(session, url)}
 

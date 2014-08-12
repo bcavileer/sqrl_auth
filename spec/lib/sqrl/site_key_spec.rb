@@ -2,7 +2,7 @@ require 'spec_helper'
 require 'sqrl/site_key'
 
 describe SQRL::SiteKey do
-  let(:imk) {'x'*32}
+  let(:imk) {'x'.b*32}
   let(:host) {'example.com'}
   subject {SQRL::SiteKey.new(imk, host)}
 
