@@ -17,6 +17,11 @@ module SQRL
       self
     end
 
+    def logoff!
+      @commands << 'logoff'
+      self
+    end
+
     def post_path
       @session.post_path
     end
