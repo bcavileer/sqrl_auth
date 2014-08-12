@@ -82,6 +82,9 @@ Client: The client may inspect the response
     # obtain user intent to login
 
     request = SQRL::AuthenticationQueryGenerator.new(session, response.body)
+    # one or more:
+    request.login!
+    request.logoff!
 
     https_post(request.post_path, request.to_hash)
 
