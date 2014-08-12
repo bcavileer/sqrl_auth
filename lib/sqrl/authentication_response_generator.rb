@@ -1,4 +1,5 @@
 require 'base64'
+require 'sqrl/tif'
 
 module SQRL
   class AuthenticationResponseGenerator
@@ -32,16 +33,7 @@ module SQRL
     end
 
     def tif
-      {
-        0x01 => :id_match,
-        0x02 => :previous_id_match,
-        0x04 => :ip_match,
-        0x08 => :login_enabled,
-        0x10 => :logged_in,
-        0x20 => :creation_allowed,
-        0x40 => :command_failed,
-        0x80 => :sqrl_failure,
-      }.map {|bit, prop| @flags[prop] ? bit : 0}.reduce(0, &:|)
+      TIF.map {|bit, prop| @flags[prop] ? bit : 0}.reduce(0, &:|)
     end
 
     private

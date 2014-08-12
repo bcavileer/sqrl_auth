@@ -1,6 +1,7 @@
 require 'base64'
 require 'sqrl/site_key'
 require 'sqrl/url'
+require 'sqrl/tif'
 
 module SQRL
   class AuthenticationResponseParser
@@ -34,19 +35,10 @@ module SQRL
     end
 
     def tif
-      params['tif'].to_i(16)
+      (params['tif'] || '').to_i(16)
     end
 
-    TIF = {
-      0x01 => :id_match,
-      0x02 => :previous_id_match,
-      0x04 => :ip_match,
-      0x08 => :login_enabled,
-      0x10 => :logged_in,
-      0x20 => :creation_allowed,
-      0x40 => :command_failed,
-      0x80 => :sqrl_failure,
-    }.each do |bit,prop|
+    TIF.each do |bit,prop|
       define_method(prop.to_s+'?') do
         tif & bit != 0
       end
