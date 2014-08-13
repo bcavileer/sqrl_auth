@@ -85,6 +85,7 @@ Client: The client may inspect the response
     # one or more:
     request.setkey!
     request.setlock!(identity_lock_key.unlock_pair)
+    request.create!
     request.login!
     request.logout!
     request.logoff! # depreciated

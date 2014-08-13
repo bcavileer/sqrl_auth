@@ -29,6 +29,11 @@ module SQRL
       self
     end
 
+    def create!
+      @commands << 'create'
+      self
+    end
+
     def login!
       @commands << 'login'
       self

@@ -88,14 +88,14 @@ Client: The client may inspect the response
     # one or more:
     request.setkey!
     request.setlock!(identity_lock_key.unlock_pair)
-    request.login!
-    request.logme!
-    request.logout!
-    request.logoff! # depreciated
     request.disable!
     request.enable!
     request.delete!
     request.create!
+    request.login!
+    request.logme!
+    request.logout!
+    request.logoff! # depreciated
 
     https_post(request.post_path, request.to_hash)
 
