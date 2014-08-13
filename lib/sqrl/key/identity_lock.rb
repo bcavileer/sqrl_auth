@@ -7,7 +7,10 @@ module SQRL
     class IdentityLock < Key
       def unlock_pair
         random = RandomLock.new
-        [random.server_unlock_key, VerifyUnlock.generate(self, random)]
+        {
+          :suk => random.server_unlock_key,
+          :vuk => VerifyUnlock.generate(self, random),
+        }
       end
     end
   end

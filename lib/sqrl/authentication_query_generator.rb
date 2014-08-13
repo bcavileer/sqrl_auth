@@ -11,6 +11,18 @@ module SQRL
     attr_reader :session
     attr_reader :server_string
     attr_reader :commands
+    attr_reader :server_unlock_key
+    attr_reader :verify_unlock_key
+
+    def setlock!(options)
+      if !(options[:suk] && options[:vuk])
+        raise ArgumentError, ":suk and :vuk are required to setlock"
+      end
+      @commands << 'setlock'
+      @server_unlock_key = encode(options[:suk])
+      @verify_unlock_key = encode(options[:vuk])
+      self
+    end
 
     def login!
       @commands << 'login'
@@ -50,7 +62,9 @@ module SQRL
         :ver => 1,
         :cmd => @commands.join('~'),
         :idk => encode(site_key.public_key),
-      }
+        :suk => @server_unlock_key,
+        :vuk => @verify_unlock_key,
+      }.reject {|k,v| v.nil?}
     end
 
     private

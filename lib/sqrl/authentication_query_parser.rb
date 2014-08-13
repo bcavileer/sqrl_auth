@@ -61,6 +61,14 @@ module SQRL
       decode(params['pids'])
     end
 
+    def suk
+      decode(client_data['suk'])
+    end
+
+    def vuk
+      decode(client_data['vuk'])
+    end
+
     private
     def decode(s)
       return '' unless s

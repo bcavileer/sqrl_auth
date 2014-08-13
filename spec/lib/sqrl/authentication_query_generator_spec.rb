@@ -26,4 +26,12 @@ describe SQRL::AuthenticationQueryGenerator do
     it {expect(subject.commands).to include('login')}
     it {expect(subject.client_data[:cmd]).to eq('login')}
   end
+
+  describe "setlock command" do
+    subject {SQRL::AuthenticationQueryGenerator.new(session, url).setlock!({:vuk => 'vuk', :suk => 'suk'})}
+    it {expect(subject.commands).to include('setlock')}
+    it {expect(subject.client_data[:cmd]).to eq('setlock')}
+    it {expect(subject.client_data[:vuk]).to be_a(String)}
+    it {expect(subject.client_data[:suk]).to be_a(String)}
+  end
 end

@@ -87,7 +87,7 @@ Client: The client may inspect the response
     request = SQRL::AuthenticationQueryGenerator.new(session, response.body)
     # one or more:
     request.setkey!
-    request.setlock!({:suk => server_unlock_key, :vuk => verify_unlock_key})
+    request.setlock!(identity_lock_key.unlock_pair)
     request.login!
     request.logme!
     request.logoff!
