@@ -83,6 +83,7 @@ Client: The client may inspect the response
 
     request = SQRL::AuthenticationQueryGenerator.new(session, response.body)
     # one or more:
+    request.setkey!
     request.setlock!(identity_lock_key.unlock_pair)
     request.login!
     request.logout!
