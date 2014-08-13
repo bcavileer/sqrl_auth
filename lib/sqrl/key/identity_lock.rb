@@ -7,7 +7,7 @@ module SQRL
     class IdentityLock < Key
       def unlock_pair
         random = RandomLock.new
-        [random.server_unlock_key, VerifyUnlock.new(self, random)]
+        [random.server_unlock_key, VerifyUnlock.generate(self, random)]
       end
     end
   end
