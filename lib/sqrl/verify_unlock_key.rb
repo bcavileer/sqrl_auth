@@ -4,9 +4,9 @@ require 'rbnacl'
 
 module SQRL
   class VerifyUnlockKey < Key
-    def initialize(identity_lock_key, random_lock_key)
-      super DiffieHellmanECC.verify_key(
-        DiffieHellmanECC.shared_secret(identity_lock_key, random_lock_key))
+    def self.generate(identity_lock_key, random_lock_key)
+      secret = DiffieHellmanECC.shared_secret(identity_lock_key, random_lock_key)
+      new RbNaCl::SigningKey.new(secret).verify_key
     end
 
     def valid?(urs, message)
