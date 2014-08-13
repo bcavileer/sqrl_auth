@@ -9,7 +9,10 @@ describe SQRL::UnlockRequestSigningKey do
   let(:rlk) {SQRL::RandomLockKey.new}
   let(:vuk) {SQRL::VerifyUnlockKey.new(ilk, rlk)}
   let(:suk) {rlk.server_unlock_key}
-  let(:ursk) {SQRL::UnlockRequestSigningKey.new(suk, iuk)}
+  subject {SQRL::UnlockRequestSigningKey.new(suk, iuk)}
 
-  it {expect(SQRL::DiffieHellmanECC.public_key(ursk)).to eq(vuk.to_bytes)}
+  it {expect(SQRL::DiffieHellmanECC.verify_key(subject)).to eq(vuk.to_bytes)}
+
+  it {expect(subject.signature('string').bytesize).to eq(RbNaCl::Signatures::Ed25519::SIGNATUREBYTES)}
+  it {expect(vuk.valid?(subject.signature('string'), 'string')).to be true}
 end
