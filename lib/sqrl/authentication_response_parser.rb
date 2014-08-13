@@ -1,5 +1,5 @@
 require 'base64'
-require 'sqrl/site_key'
+require 'sqrl/key/site'
 require 'sqrl/url'
 require 'sqrl/tif'
 

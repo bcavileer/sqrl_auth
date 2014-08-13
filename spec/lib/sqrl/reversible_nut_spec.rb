@@ -1,9 +1,9 @@
 require 'spec_helper'
 require 'sqrl/reversible_nut'
-require 'sqrl/server_key'
+require 'sqrl/key/server'
 
 describe SQRL::ReversibleNut do
-  let(:server_key) {SQRL::ServerKey.new}
+  let(:server_key) {SQRL::Key::Server.new}
   let(:ip) {'127.0.0.1'}
   subject {SQRL::ReversibleNut.new(server_key, ip)}
   it {expect(subject.to_bytes.length).to eq(16)}

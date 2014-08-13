@@ -1,10 +1,10 @@
 require 'spec_helper'
-require 'sqrl/site_key'
+require 'sqrl/key/site'
 
-describe SQRL::SiteKey do
+describe SQRL::Key::Site do
   let(:imk) {'x'.b*32}
   let(:host) {'example.com'}
-  subject {SQRL::SiteKey.new(imk, host)}
+  subject {SQRL::Key::Site.new(imk, host)}
 
   it {expect(subject.public_key).to be_a(String)}
   it {expect(subject.signature('string').bytesize).to eq(RbNaCl::Signatures::Ed25519::SIGNATUREBYTES)}

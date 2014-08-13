@@ -1,10 +1,10 @@
 require 'spec_helper'
-require 'sqrl/identity_master_key'
+require 'sqrl/key/identity_master'
 require 'sqrl/client_session'
 require 'sqrl/authentication_response_parser'
 
 describe SQRL::AuthenticationResponseParser do
-  let(:imk) {SQRL::IdentityMasterKey.new('x'.b*32)}
+  let(:imk) {SQRL::Key::IdentityMaster.new('x'.b*32)}
   let(:nut) {'1vwuE1aBqyOHCg9yqVDhnQ'}
   let(:url) {'qrl://example.com/sqrl?nut=awnuts'}
   let(:session) {SQRL::ClientSession.new(url, imk)}
