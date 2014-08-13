@@ -7,6 +7,7 @@ module SQRL
       @nut = nut
       @flags = flags
       @fields = fields
+      @fields[:suk] = encode(@fields[:suk]) if @fields[:suk]
       @tif_base = 16
     end
 
@@ -29,7 +30,7 @@ module SQRL
         :ver => '1',
         :nut => @nut,
         :tif => tif.to_s(tif_base),
-      }.merge(@fields)
+      }.merge(@fields).reject {|k,v| v.nil?}
     end
 
     def tif

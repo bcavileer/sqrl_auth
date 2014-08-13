@@ -44,6 +44,14 @@ module SQRL
       end
     end
 
+    def suk?
+      params['suk']
+    end
+
+    def suk
+      decode(params['suk'])
+    end
+
     private
 
     def decode(s)
