@@ -1,4 +1,4 @@
-require 'base64'
+require 'sqrl/base64'
 require 'sqrl/tif'
 
 module SQRL
@@ -39,7 +39,7 @@ module SQRL
     private
 
     def encode(string)
-      Base64.urlsafe_encode64(string).sub(/=*\z/, '')
+      Base64.encode(string)
     end
   end
 end

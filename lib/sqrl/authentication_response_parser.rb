@@ -1,4 +1,4 @@
-require 'base64'
+require 'sqrl/base64'
 require 'sqrl/key/site'
 require 'sqrl/url'
 require 'sqrl/tif'
@@ -47,10 +47,7 @@ module SQRL
     private
 
     def decode(s)
-      return '' unless s
-      r = (s.length % 4)
-      badness = r > 0 ? 4 - r : 0
-      Base64.urlsafe_decode64(s + '='*badness)
+      Base64.decode(s)
     end
 
     def parse_params(s)

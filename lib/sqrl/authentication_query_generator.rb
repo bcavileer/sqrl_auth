@@ -1,4 +1,4 @@
-require 'base64'
+require 'sqrl/base64'
 
 module SQRL
   class AuthenticationQueryGenerator
@@ -74,7 +74,7 @@ module SQRL
     end
 
     def encode(string)
-      Base64.urlsafe_encode64(string).sub(/=*\z/, '')
+      Base64.encode(string)
     end
   end
 end
