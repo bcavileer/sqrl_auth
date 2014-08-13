@@ -85,7 +85,8 @@ Client: The client may inspect the response
     # one or more:
     request.setlock!(identity_lock_key.unlock_pair)
     request.login!
-    request.logoff!
+    request.logout!
+    request.logoff! # depreciated
 
     https_post(request.post_path, request.to_hash)
 

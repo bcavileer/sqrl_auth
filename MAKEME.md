@@ -90,7 +90,8 @@ Client: The client may inspect the response
     request.setlock!(identity_lock_key.unlock_pair)
     request.login!
     request.logme!
-    request.logoff!
+    request.logout!
+    request.logoff! # depreciated
     request.disable!
     request.enable!
     request.delete!

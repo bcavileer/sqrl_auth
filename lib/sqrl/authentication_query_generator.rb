@@ -29,6 +29,12 @@ module SQRL
       self
     end
 
+    def logout!
+      @commands << 'logout'
+      self
+    end
+
+    # depreciated
     def logoff!
       @commands << 'logoff'
       self
