@@ -70,6 +70,8 @@ module SQRL
 
     def parse_params(s)
       Hash[s.split("\r\n").map {|s| s.split('=')}]
+    rescue ArgumentError => e
+      {'error' => e, 'tif' => 0x40.to_s(tif_base)}
     end
   end
 end
