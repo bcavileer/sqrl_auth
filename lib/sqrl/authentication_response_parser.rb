@@ -7,6 +7,7 @@ module SQRL
   class AuthenticationResponseParser
     def initialize(session, params)
       @session = session
+      @tif_base = 16
 
       if (params.respond_to?(:split))
         @params = parse_params(params)
@@ -25,6 +26,7 @@ module SQRL
 
     attr_reader :params
     attr_reader :session
+    attr_accessor :tif_base
 
     def post_path
       session.post_path
@@ -35,7 +37,7 @@ module SQRL
     end
 
     def tif
-      (params['tif'] || '').to_i(16)
+      (params['tif'] || '').to_i(@tif_base)
     end
 
     TIF.each do |bit,prop|
