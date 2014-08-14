@@ -30,7 +30,7 @@ module SQRL
         :ver => '1',
         :nut => @nut,
         :tif => tif.to_s(tif_base),
-      }.merge(@fields).reject {|k,v| v.nil?}
+      }.merge(@fields).reject {|k,v| v.nil? || v == ''}
     end
 
     def tif
