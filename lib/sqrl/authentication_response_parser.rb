@@ -47,11 +47,19 @@ module SQRL
     end
 
     def suk?
-      params['suk']
+      !!params['suk']
     end
 
     def suk
       decode(params['suk'])
+    end
+
+    def ask?
+      !!params['ask']
+    end
+
+    def ask
+      params['ask'] || ''
     end
 
     private
