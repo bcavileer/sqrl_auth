@@ -15,6 +15,7 @@ module SQRL
     end
 
     attr_reader :params
+    attr_accessor :login_ip # convenience data holder
 
     def commands
       (client_data['cmd'] || '').split('~')
