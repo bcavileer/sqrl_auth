@@ -80,7 +80,7 @@ module SQRL
         :idk => encode(site_key.public_key),
         :suk => @server_unlock_key,
         :vuk => @verify_unlock_key,
-      }.reject {|k,v| v.nil?}
+      }.reject {|k,v| v.nil? || v == ''}
     end
 
     private
