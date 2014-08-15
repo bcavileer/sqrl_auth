@@ -2,7 +2,7 @@ require 'rbnacl'
 require 'sqrl/base64'
 
 module SQRL
-  class AuthenticationQueryParser
+  class QueryParser
     def initialize(params)
       if (params.respond_to?(:split))
         @params = Hash[params.split('&').map {|s| s.split('=')}]

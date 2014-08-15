@@ -43,14 +43,14 @@ Client: Once the code or link has been decoded
     # (obtain and decrypt the identity_master_key)
     session = SQRL::ClientSession.new(url, identity_master_key)
 
-    request = SQRL::AuthenticationQueryGenerator.new(session, url)
+    request = SQRL::QueryGenerator.new(session, url)
 
     https_post(request.post_path, request.to_hash)
     # or request.post_body depending on what your library wants
 
 Server: The server receives a request and verifies it
 
-    req = SQRL::AuthenticationQueryParser.new(request.body)
+    req = SQRL::QueryParser.new(request.body)
     invalid = !req.valid?
     req_nut = SQRL::ReversibleNut.reverse(server_key, params[:nut])
     user = find_user(req.idk)
@@ -58,7 +58,7 @@ Server: The server receives a request and verifies it
     req.login? #etc, on the second loop
 
     res_nut = req_nut.response_nut
-    response = SQRL::AuthenticationResponseGenerator.new(res_nut, {
+    response = SQRL::ResponseGenerator.new(res_nut, {
       :id_match => req.idk == user.idk,
       :previous_id_match => req.pidk == user.idk,
       :ip_match => request.ip == req_nut.ip,
@@ -74,14 +74,14 @@ Server: The server receives a request and verifies it
 
 Client: The client may inspect the response
 
-    res = SQRL::AuthenticationResponseParser.new(session, response.body)
+    res = SQRL::ResponseParser.new(session, response.body)
     res.command_failed?
     res.logged_in?
     res.server_friendly_name
 
     # obtain user intent to login
 
-    request = SQRL::AuthenticationQueryGenerator.new(session, response.body)
+    request = SQRL::QueryGenerator.new(session, response.body)
     # one or more:
     request.setkey!
     request.setlock!(identity_lock_key.unlock_pair)

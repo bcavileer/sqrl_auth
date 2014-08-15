@@ -1,9 +1,9 @@
 require 'spec_helper'
 require 'sqrl/key/identity_master'
 require 'sqrl/client_session'
-require 'sqrl/authentication_response_parser'
+require 'sqrl/response_parser'
 
-describe SQRL::AuthenticationResponseParser do
+describe SQRL::ResponseParser do
   let(:imk) {SQRL::Key::IdentityMaster.new('x'.b*32)}
   let(:nut) {'1vwuE1aBqyOHCg9yqVDhnQ'}
   let(:url) {'qrl://example.com/sqrl?nut=awnuts'}
@@ -14,7 +14,7 @@ nut=#{nut}\r
 tif=44\r
 sfn=SQRL::Test\r
 RESPONSE
-  subject {SQRL::AuthenticationResponseParser.new(session, message)}
+  subject {SQRL::ResponseParser.new(session, message)}
 
   it {expect(subject.post_path).to eq('http://example.com/sqrl?nut=awnuts')}
   it {expect(subject.params['ver']).to eq('1')}
@@ -25,7 +25,7 @@ RESPONSE
 
   describe "encoded message" do
     let(:encoded) {"server=dmVyPTENCnRpZj02NA0KbnV0PU5XRXlZV1F4WlRFM056QTBOemhqTW1KbU5EUm1abVZrTUdZeVpqUmxOVFUNCnNmbj1UZXN0IFNlcnZlcg0K"}
-    subject {SQRL::AuthenticationResponseParser.new(session, encoded)}
+    subject {SQRL::ResponseParser.new(session, encoded)}
 
     it {expect(subject.params['ver']).to eq('1')}
     it {expect(subject.server_friendly_name).to eq('Test Server')}

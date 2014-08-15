@@ -1,9 +1,9 @@
 require 'spec_helper'
-require 'sqrl/authentication_response_generator'
+require 'sqrl/response_generator'
 
-describe SQRL::AuthenticationResponseGenerator do
+describe SQRL::ResponseGenerator do
   def nut; 'x'*22; end
-  subject {SQRL::AuthenticationResponseGenerator.new(nut, {}, {})}
+  subject {SQRL::ResponseGenerator.new(nut, {}, {})}
 
   it {expect(subject.response_body).to match('server=')}
   it {expect(subject.server_string).to match('ver=1')}
@@ -14,7 +14,7 @@ describe SQRL::AuthenticationResponseGenerator do
   it {expect(subject.server_data[:tif]).to be_a(String)}
 
   def with(flags)
-    SQRL::AuthenticationResponseGenerator.new(nut, flags, {}).tif
+    SQRL::ResponseGenerator.new(nut, flags, {}).tif
   end
 
   describe 'tif' do
@@ -27,7 +27,7 @@ describe SQRL::AuthenticationResponseGenerator do
   end
 
   describe 'additional fields' do
-    subject {SQRL::AuthenticationResponseGenerator.new(nut, {}, {
+    subject {SQRL::ResponseGenerator.new(nut, {}, {
         :qry => 'query',
         :lnk => 'link',
         :sfn => 'name',

@@ -4,7 +4,7 @@ require 'sqrl/url'
 require 'sqrl/tif'
 
 module SQRL
-  class AuthenticationResponseParser
+  class ResponseParser
     def initialize(session, params)
       @session = session
       @tif_base = 16

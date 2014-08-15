@@ -1,13 +1,13 @@
 require 'spec_helper'
-require 'sqrl/authentication_query_generator'
+require 'sqrl/query_generator'
 require 'sqrl/client_session'
 require 'sqrl/key/identity_master'
 
-describe SQRL::AuthenticationQueryGenerator do
+describe SQRL::QueryGenerator do
   let(:url) {'sqrl://example.com/sqrl?nut=awnuts'}
   let(:imk) {SQRL::Key::IdentityMaster.new('x'.b*32)}
   let(:session) {SQRL::ClientSession.new(url, imk)}
-  subject {SQRL::AuthenticationQueryGenerator.new(session, url)}
+  subject {SQRL::QueryGenerator.new(session, url)}
 
   it {expect(subject.post_path).to eq('https://example.com/sqrl?nut=awnuts')}
   it {expect(subject.server_string).to eq(url)}
@@ -22,13 +22,13 @@ describe SQRL::AuthenticationQueryGenerator do
   it {expect(subject.client_data.include?(:cmd)).to be false}
 
   describe "login command" do
-    subject {SQRL::AuthenticationQueryGenerator.new(session, url).login!}
+    subject {SQRL::QueryGenerator.new(session, url).login!}
     it {expect(subject.commands).to include('login')}
     it {expect(subject.client_data[:cmd]).to eq('login')}
   end
 
   describe "setlock command" do
-    subject {SQRL::AuthenticationQueryGenerator.new(session, url).setlock!({:vuk => 'vuk', :suk => 'suk'})}
+    subject {SQRL::QueryGenerator.new(session, url).setlock!({:vuk => 'vuk', :suk => 'suk'})}
     it {expect(subject.commands).to include('setlock')}
     it {expect(subject.client_data[:cmd]).to eq('setlock')}
     it {expect(subject.client_data[:vuk]).to be_a(String)}

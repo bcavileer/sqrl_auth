@@ -1,7 +1,7 @@
 require 'sqrl/base64'
 
 module SQRL
-  class AuthenticationQueryGenerator
+  class QueryGenerator
     def initialize(session, server_string)
       @session = session
       @server_string = server_string

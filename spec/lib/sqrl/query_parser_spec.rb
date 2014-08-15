@@ -1,13 +1,13 @@
 require 'spec_helper'
-require 'sqrl/authentication_query_parser'
+require 'sqrl/query_parser'
 require 'sqrl/client_session'
-require 'sqrl/authentication_query_generator'
+require 'sqrl/query_generator'
 
-describe SQRL::AuthenticationQueryParser do
+describe SQRL::QueryParser do
   URL = 'sqrl://example.com/sqrl?nut=awnuts'
   def self.testcase
     session = SQRL::ClientSession.new(URL, 'x'*32)
-    SQRL::AuthenticationQueryGenerator.new(session, URL).login!
+    SQRL::QueryGenerator.new(session, URL).login!
   end
   #p testcase.to_hash
   #p testcase.post_body
@@ -22,10 +22,10 @@ describe SQRL::AuthenticationQueryParser do
     "client=dmVyPTENCmNtZD1sb2dpbg0KaWRrPXZkYW82Rk9Pdk05TElpN3JQUGNGSFI4bS1vZ2dTd0xTUW9QNUNUdVJzUU0&server=c3FybDovL2V4YW1wbGUuY29tL3Nxcmw_bnV0PWF3bnV0cw&ids=QKKRM7ygMKilHrYLOp9X4ZndAYZ3nZaQVI8l-qVSIj7XUebqnG_GZ2jOTuZMOlNOVz36RyBCrC7wdvSJl6phAQ"
   }
 
-  it {expect(SQRL::AuthenticationQueryParser.new({})).not_to be_valid}
+  it {expect(SQRL::QueryParser.new({})).not_to be_valid}
 
   describe 'hash request' do
-    subject {SQRL::AuthenticationQueryParser.new(request)}
+    subject {SQRL::QueryParser.new(request)}
     it {expect(subject.server_string).to eq(URL)}
     it {expect(subject.client_string).to match('ver=1\r\ncmd=login\r\nidk=')}
     it {expect(subject.client_data).to be_a(Hash)}
@@ -38,7 +38,7 @@ describe SQRL::AuthenticationQueryParser do
   end
 
   describe 'string request' do
-    subject {SQRL::AuthenticationQueryParser.new(body)}
+    subject {SQRL::QueryParser.new(body)}
     it {expect(subject.server_string).to eq(URL)}
     it {expect(subject.client_string).to match('ver=1\r\ncmd=login\r\nidk=')}
   end

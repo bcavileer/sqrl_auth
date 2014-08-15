@@ -2,7 +2,7 @@ require 'sqrl/base64'
 require 'sqrl/tif'
 
 module SQRL
-  class AuthenticationResponseGenerator
+  class ResponseGenerator
     def initialize(nut, flags, fields)
       @nut = nut
       @flags = flags
