@@ -2,10 +2,16 @@ require 'spec_helper'
 require 'sqrl/query_generator'
 require 'sqrl/client_session'
 require 'sqrl/key/identity_master'
+require 'sqrl/key/identity_unlock'
+require 'sqrl/key/server_unlock'
+require 'sqrl/key/unlock_request_signing'
 
 describe SQRL::QueryGenerator do
   let(:url) {'sqrl://example.com/sqrl?nut=awnuts'}
   let(:imk) {SQRL::Key::IdentityMaster.new('x'.b*32)}
+  let(:iuk) {SQRL::Key::IdentityUnlock.new('x'.b*32)}
+  let(:suk) {SQRL::Key::ServerUnlock.new('x'.b*32)}
+  let(:ursk) {SQRL::Key::UnlockRequestSigning.new(suk, iuk)}
   let(:session) {SQRL::ClientSession.new(url, imk)}
   subject {SQRL::QueryGenerator.new(session, url)}
 
@@ -33,5 +39,10 @@ describe SQRL::QueryGenerator do
     it {expect(subject.client_data[:cmd]).to eq('setlock')}
     it {expect(subject.client_data[:vuk]).to be_a(String)}
     it {expect(subject.client_data[:suk]).to be_a(String)}
+  end
+
+  describe "unlock" do
+    subject {SQRL::QueryGenerator.new(session, url).setlock!({:vuk => 'vuk', :suk => 'suk'}).unlock(ursk)}
+    it {expect(subject.to_hash[:ids]).to match(/\A[\-\w_]+\Z/)}
   end
 end

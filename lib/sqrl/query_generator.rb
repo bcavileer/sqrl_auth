@@ -50,6 +50,11 @@ module SQRL
       self
     end
 
+    def unlock(iuk)
+      @iuk = iuk
+      self
+    end
+
     def post_path
       @session.post_path
     end
@@ -66,7 +71,8 @@ module SQRL
         :client => client,
         :server => server,
         :ids => encode(site_key.signature(base)),
-      }
+        :urs => @iuk && encode(@iuk.signature(base)),
+      }.reject {|k,v| v.nil? || v == ''}
     end
 
     def client_string
