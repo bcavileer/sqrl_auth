@@ -10,7 +10,11 @@ module SQRL
       @tif_base = 16
 
       if (params.respond_to?(:split))
-        @params = parse_form(params)
+        if params.count("\r") > params.count("&")
+          @params = parse_params(params)
+        else
+          @params = parse_form(params)
+        end
       else
         @params = params
       end
