@@ -10,7 +10,7 @@ module SQRL
       @tif_base = 16
 
       if (params.respond_to?(:split))
-        @params = parse_params(params)
+        @params = parse_form(params)
       else
         @params = params
       end
@@ -66,6 +66,12 @@ module SQRL
 
     def decode(s)
       Base64.decode(s)
+    end
+
+    def parse_form(s)
+      Hash[s.split("&").map {|s| s.split('=')}]
+    rescue ArgumentError => e
+      {'error' => e, 'tif' => 0x40.to_s(tif_base)}
     end
 
     def parse_params(s)
