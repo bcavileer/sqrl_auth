@@ -34,6 +34,11 @@ module SQRL
       false
     end
 
+    def unlocked?(vuk)
+      return false unless vuk && params['urs']
+      vuk.valid?(urs, message)
+    end
+
     def server_string
       decode(params['server'])
     end
@@ -47,27 +52,31 @@ module SQRL
     end
 
     def idk
-      decode(client_data['idk'])
+      decode(client_data['idk']).b
     end
 
     def ids
-      decode(params['ids'])
+      decode(params['ids']).b
     end
 
     def pidk
-      decode(client_data['pidk'])
+      decode(client_data['pidk']).b
     end
 
     def pids
-      decode(params['pids'])
+      decode(params['pids']).b
     end
 
     def suk
-      decode(client_data['suk'])
+      decode(client_data['suk']).b
     end
 
     def vuk
-      decode(client_data['vuk'])
+      decode(client_data['vuk']).b
+    end
+
+    def urs
+      decode(params['urs']).b
     end
 
     private

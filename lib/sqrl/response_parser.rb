@@ -55,7 +55,7 @@ module SQRL
     end
 
     def suk
-      decode(params['suk'])
+      decode(params['suk']).b
     end
 
     def ask?
