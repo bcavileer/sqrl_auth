@@ -5,4 +5,5 @@ describe SQRL::Key::IdentityUnlock do
   subject {SQRL::Key::IdentityUnlock.new('x'.b*32)}
   it {expect(subject.b).to eq('x'.b*32)}
   it {expect(subject.identity_lock_key).to be_kind_of(SQRL::Key::IdentityLock)}
+  it {expect(subject.identity_master_key).to be_kind_of(SQRL::Key::IdentityMaster)}
 end
