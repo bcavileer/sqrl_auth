@@ -6,7 +6,7 @@ describe SQRL::ReversibleNut do
   let(:server_key) {SQRL::Key::Server.new}
   let(:ip) {'127.0.0.1'}
   subject {SQRL::ReversibleNut.new(server_key, ip)}
-  it {expect(subject.to_bytes.length).to eq(16)}
+  it {expect(subject.b.length).to eq(16)}
   it {expect(subject.to_s.length).to eq(22)}
   it {expect(subject.to_s).not_to match('=')}
   it {expect(subject.response_nut).to be_a(SQRL::ReversibleNut)}

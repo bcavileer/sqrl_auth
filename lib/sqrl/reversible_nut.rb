@@ -25,12 +25,12 @@ module SQRL
       new(server_key, ip, timestamp, serial)
     end
 
-    def to_bytes
+    def b
       self.class.encrypt(server_key, raw_bytes)
     end
 
     def to_s
-      Base64.encode(to_bytes)
+      Base64.encode(b)
     end
 
     alias_method :to_str, :to_s
@@ -50,14 +50,14 @@ module SQRL
     def self.encrypt(server_key, bytes)
       cipher = new_cipher
       cipher.encrypt
-      cipher.key = server_key
+      cipher.key = server_key.b
       cipher.update(bytes)
     end
 
     def self.decrypt(server_key, bytes)
       cipher = new_cipher
       cipher.decrypt
-      cipher.key = server_key
+      cipher.key = server_key.b
       cipher.update(bytes)
     end
 

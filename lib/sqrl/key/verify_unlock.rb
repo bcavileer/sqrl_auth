@@ -7,7 +7,7 @@ module SQRL
     class VerifyUnlock < Key
       def self.generate(identity_lock_key, random_lock_key)
         secret = DiffieHellmanECC.shared_secret(identity_lock_key, random_lock_key)
-        new RbNaCl::SigningKey.new(secret).verify_key
+        new RbNaCl::SigningKey.new(secret).verify_key.to_bytes
       end
 
       def valid?(urs, message)

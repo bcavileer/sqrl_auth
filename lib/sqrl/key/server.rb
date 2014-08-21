@@ -6,6 +6,8 @@ module SQRL
       def initialize(bytes = SecureRandom.random_bytes(16))
         super(bytes)
       end
+
+      def key_length; 16; end
     end
   end
 end

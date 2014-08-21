@@ -1,18 +1,24 @@
+require 'sqrl/base64'
+
 module SQRL
   class Key
     def initialize(bytes)
-      bytes = bytes.to_s
-      unless bytes.encoding == Encoding::BINARY
-        raise EncodingError, "keys must use BINARY encoding (got #{bytes.encoding})"
+      bytes = bytes.b
+      unless bytes.length == key_length
+        raise ArgumentError, "keys must be 32 bytes #{bytes.length})"
       end
       @bytes = bytes
     end
 
-    def to_bytes
+    def key_length; 32; end
+
+    def b
       @bytes
     end
-    alias_method :to_s, :to_bytes
-    alias_method :to_str, :to_bytes
+
+    def to_s
+      Base64.encode(@bytes)
+    end
 
     def wipe!
       @bytes.length.times do |i| @bytes[i] = "\0" end

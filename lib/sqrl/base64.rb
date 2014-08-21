@@ -6,7 +6,7 @@ module SQRL
 
     def encode(s)
       return '' unless s
-      ::Base64.urlsafe_encode64(s).sub(/=*\z/, '')
+      ::Base64.urlsafe_encode64(s.b).sub(/=*\z/, '')
     end
 
     def decode(s)

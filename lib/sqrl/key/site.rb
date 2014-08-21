@@ -4,9 +4,9 @@ module SQRL
   class Key
     class Site
       def initialize(imk, host)
-        imk = imk.to_s
-        unless imk.encoding == Encoding::BINARY
-          raise EncodingError, "keys must use BINARY encoding (got #{imk.encoding})"
+        imk = imk.b
+        unless imk.length == 32
+          raise ArgumentError, "keys must be 32 bytes #{bytes.length})"
         end
         @private_key = RbNaCl::SigningKey.new(RbNaCl::HMAC::SHA256.auth(imk, host))
         @public_key = @private_key.verify_key.to_s
