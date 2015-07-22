@@ -29,7 +29,7 @@ Server: To create a SQRL login session, create a Nut
     server_key = SQRL::Key::Server.new
 
     nut = SQRL::ReversibleNut.new(server_key, client_ip)
-    url = SQRL::URL.new('example.com/sqrl', nut) # convience and testing
+    url = SQRL::URL.sqrl('example.com/sqrl', nut) # convience and testing
     url = sqrl_url(:nut => nut.to_s) # or use your framework
     qr_code(url)
 
